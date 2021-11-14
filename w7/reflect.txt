@@ -1,0 +1,31 @@
+/********************************************
+	Name   :Heeyeon Han
+	ID     : 154222194
+	Email  : hhan34@myseneca.ca
+	Section: OOP345ZAA
+	Date: 2021/11/14
+*********************************************/
+//I confirm that the content of this file is created by me, with the exception of the parts provided to me by my professor.
+
+1. list all the STL functions that you have used in this workshop; explain your reasoning for choosing each one, and not another.
+Answer =>
+I used 2 STL functions in w7 workshops. the two functions are std::copy_if() and std::sort() in SongCollection::getSongsForArtist(string naming) and SongCollection::sort(string string).
+
+The reason for using std::copy_if() in SongCollection::getSongsForArtist(string naming) => 
+if element was met a specific condition that user defined, it can be eligible with copy object from the container to a local list container
+I applied this STL function because I was returning a new container that included all the songs written by the artist and did not modify the data members under management, so I had to copy the contents of one container into another.
+
+The reason for using std::sort() in SongCollection::sort(string string) => 
+I used the sort() function to sort the specific field I wanted by putting the start and end point addresses of the array of factors.
+
+2. present the advantages of using STL algorithms vs. implementing the functionality by yourself using loops.
+Answer =>If i write and use the loop myself, 
+it will be much easier to understand the code, but if i use STL function such as for_each() function, it is faster than the loop statement when debugging. 
+In addition, since only STL function is easily used, the readability of the code is much better.
+
+3. the function that sorts the collection of songs receives as a parameter the field name to use; 
+this can create errors if the client specifies an invalid field (or misspells it). 
+How would you redesign that function to prevent the client to specify an invalid string, allowing any error to be detected by the compiler?
+Answer =>
+If the client code misspells the symbol constant or tries to convey another type of entity, the compiler will make an error.
+Instead of accepting std::string, update the list of parameters user use to allow only these three symbol constants. 
