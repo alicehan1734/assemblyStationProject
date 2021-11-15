@@ -66,19 +66,15 @@ namespace sdds {
 
 	void Station::display(ostream& os, bool full) const {
 		if (full)
-		{
-			os << "[" << setfill('0') << setw(3) << right << id << "] ";
-			os << "Item: " << setw(m_widthField) << setfill(' ') << left << item_handled;
-			os << " [" << setfill('0') << setw(6) << right << serial_num << "]";
-			os << " Quantity: " << setw(m_widthField) << setfill(' ') << left << curr_items;
-			os << " Description: " << desc << endl;
-
-		}
+			os << "[" << setfill('0') << setw(3) << right << id << "] " 
+			<< "Item: " << setw(m_widthField) << setfill(' ') << left 
+			<< item_handled << " [" << setfill('0') << setw(6) << right << serial_num 
+			<< "]" << " Quantity: " << setw(m_widthField) << setfill(' ') << left 
+			<< curr_items << " Description: " << desc << endl;
 		else
-		{
-			os << "[" << setfill('0') << setw(3) << right << id << "] ";
-			os << "Item: " << setw(m_widthField) << setfill(' ') << left << item_handled;
-			os << " [" << setfill('0') << setw(6) << right << serial_num << "]" << endl;
-		}
+			os << "[" << setfill('0') << setw(3) << right << id << "] " 
+			<< "Item: " << setw(m_widthField) << setfill(' ') 
+			<< left << item_handled << " [" << setfill('0') 
+			<< setw(6) << right << serial_num << "]" << endl;
 	}
 }
