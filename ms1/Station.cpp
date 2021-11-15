@@ -17,64 +17,81 @@
 using namespace std;
 namespace sdds {
 
-	size_t Station::m_widthField = 1;
-	int Station::id_generator = 0;
+	int Station::id = 0;
+	size_t Station::width = 0;
 
-	Station::Station(const string& str) {
-		id_generator++;
+
+	size_t Station::getNextSerialNumber() {
+		return numOfSerial++;
+	}
+
+	size_t Station::getQuantity() const {
+		return items;
+	}
+
+	const string& Station::getItemName() const {
+		return handledItem;
+	}
+
+
+	void Station::updateQuantity() {
+		
+
+		if (items - 1 <= 1) {
+			items = 0;
+		}
+		else {
+			items--;
+		}
+
+	}
+
+	void Station::display(ostream& ostream, bool check) const {
+		if (!check)
+			ostream << "[" << setfill('0') << setw(3) << right << stationId << "] "
+			<< "Item: " << setw(width) << setfill(' ')
+			<< left << handledItem << " [" << setfill('0')
+			<< setw(6) << right << numOfSerial << "]" << endl;
+		else
+			ostream << "[" << setfill('0') << setw(3) << right << stationId << "] "
+			<< "Item: " << setw(width) << setfill(' ') << left
+			<< handledItem << " [" << setfill('0') << setw(6) << right << numOfSerial
+			<< "]" << " Quantity: " << setw(width) << setfill(' ') << left
+			<< items << " Description: " << description << endl;
+	}
+
+
+	Station::Station(const string& stringText) {
+		
+		bool check = false;
+		size_t postion = 0;
+
 		Utilities utilities;
-		size_t pos = 0;
-		bool more = false;
+
 		
 		try
 		{
-			item_handled = utilities.extractToken(str, pos, more);
-			if (m_widthField < utilities.getFieldWidth())
-			{
-				m_widthField = utilities.getFieldWidth();
-			}
-			serial_num = stoi(utilities.extractToken(str, pos, more));
-			curr_items = stoi(utilities.extractToken(str, pos, more));
-			desc = utilities.extractToken(str, pos, more);
+			handledItem = utilities.extractToken(stringText, postion, check);
+
+			if (width < utilities.getFieldWidth())
+				width = utilities.getFieldWidth();
+
+			numOfSerial = stoi(utilities.extractToken(stringText, postion, check));
+
+			items = stoi(utilities.extractToken(stringText, postion, check));
+
+			description = utilities.extractToken(stringText, postion, check);
 		}
 		catch (string& error)
 		{
 			cout << error;
 		}
-		id = id_generator;
-	}
-	
-	const string& Station::getItemName() const {
-		return item_handled;
+		
+		id++;
+
+		stationId = id;
 	}
 
-	size_t Station::getNextSerialNumber() {
-		return serial_num++;
-	}
 
-	size_t Station::getQuantity() const {
-		return curr_items;
-	}
 
-	void Station::updateQuantity() {
-		curr_items--;
-		if (curr_items < 0)
-		{
-			curr_items = 0;
-		}
-	}
-
-	void Station::display(ostream& os, bool full) const {
-		if (full)
-			os << "[" << setfill('0') << setw(3) << right << id << "] " 
-			<< "Item: " << setw(m_widthField) << setfill(' ') << left 
-			<< item_handled << " [" << setfill('0') << setw(6) << right << serial_num 
-			<< "]" << " Quantity: " << setw(m_widthField) << setfill(' ') << left 
-			<< curr_items << " Description: " << desc << endl;
-		else
-			os << "[" << setfill('0') << setw(3) << right << id << "] " 
-			<< "Item: " << setw(m_widthField) << setfill(' ') 
-			<< left << item_handled << " [" << setfill('0') 
-			<< setw(6) << right << serial_num << "]" << endl;
-	}
 }

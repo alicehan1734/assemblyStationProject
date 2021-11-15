@@ -16,15 +16,15 @@
 namespace sdds {
 	class Utilities {
 
-		size_t utils_width = 1;		
 		static char utils_delimiter;
-	
+		size_t utils_width = 0;
+
 	public:
 
 		void setFieldWidth(size_t fieldWidth);
 		static void setDelimiter(char newDel);
-		static char getDelimiter();
 		size_t getFieldWidth() const;
+		static char getDelimiter();
 
 		std::string extractToken(const std::string& stringText, size_t& position, bool& check);
 

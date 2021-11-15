@@ -15,21 +15,26 @@
 
 namespace sdds {
 	class Station {
-		int id = 0;
-		std::string item_handled = "";
-		std::string desc = "";
-		size_t serial_num = 0;
-		size_t curr_items = 0;
-		static size_t m_widthField;
-		static int id_generator;
+		int stationId = 0;
+		size_t numOfSerial = 0;
+		size_t items = 0;
+
+		std::string handledItem = "	";
+		std::string description = "	";
+		
+		static size_t width;
+		static int id;
+
 	public:
+
 		Station() {};
 		Station(const std::string&);
+		void updateQuantity();
+		void display(std::ostream& ostream, bool check) const;
 		const std::string& getItemName() const;
 		size_t getNextSerialNumber();
 		size_t getQuantity() const;
-		void updateQuantity();
-		void display(std::ostream& os, bool full) const;
+
 	};
 }
 #endif

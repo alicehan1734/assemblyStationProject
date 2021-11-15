@@ -18,6 +18,15 @@ namespace sdds {
 
 	char Utilities::utils_delimiter = ' ';
 
+
+	void Utilities::setDelimiter(char newDel) {
+		utils_delimiter = newDel;
+	}
+
+	char Utilities::getDelimiter() {
+		return utils_delimiter;
+	}
+
 	void Utilities::setFieldWidth(size_t fieldWidth) {
 		utils_width = fieldWidth;
 	}
@@ -27,38 +36,35 @@ namespace sdds {
 	}
 
 	std::string Utilities::extractToken(const std::string& stringText, size_t& position, bool& check) {
-		string ex_token = stringText.substr(position);
-		size_t pos = ex_token.find(utils_delimiter);
 
-		if (pos != string::npos)
+		size_t size_position = stringText.substr(position).find(utils_delimiter);
+		string token = stringText.substr(position);
+
+		if (size_position == string::npos)
 		{
-			ex_token = ex_token.substr(0, pos);
-			position += pos + 1;
-			if (ex_token == "")
+			check = false;
+
+			if (token.length() > utils_width)
+				setFieldWidth(token.length());
+		}
+		else {
+			token = token.substr(0, size_position);
+
+			position += size_position + 1;
+			
+			if (token == "")
 			{
 				check = false;
 				throw "There is not any token between delimiters";
 			}
 			check = true;
 
-			if (ex_token.length() > utils_width)
-				setFieldWidth(ex_token.length());
-		}
-		else {
-			check = false;
-
-			if (ex_token.length() > utils_width)
-				setFieldWidth(ex_token.length());
+			if (token.length() > utils_width)
+				setFieldWidth(token.length());
+		
 		}
 
-		return ex_token;
+		return token;
 	}
 
-	void Utilities::setDelimiter(char newDel) {
-		utils_delimiter = newDel;
-	}
-
-	char Utilities::getDelimiter() {
-		return utils_delimiter;
-	}
 }
