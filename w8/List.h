@@ -3,6 +3,14 @@
 // Workshop 8 - Smart Pointers
 // 2019/11 - Cornel
 
+/********************************************
+	Name   :Heeyeon Han
+	ID     : 154222194
+	Email  : hhan34@myseneca.ca
+	Section: OOP345ZAA
+	Date: 2021/11/21
+*********************************************/
+//I confirm that the content of this file is created by me, with the exception of the parts provided to me by my professor.
 
 #include <iostream>
 #include <iomanip>
@@ -33,9 +41,17 @@ namespace sdds {
 
 		// TODO: Overload the += operator with a smart pointer
 		//       as a second operand.
+		void operator+=(std::unique_ptr<T>& priceList) {
+			list.push_back(*priceList);
+		}
+
 
 		// TODO: Overload the += operator with a raw pointer
 		//       as a second operand.
+
+		void operator+=(const T* priceList) {
+			list.push_back(*priceList);
+		}
 
 		void display(std::ostream& os) const {
             os << std::fixed << std::setprecision(2);

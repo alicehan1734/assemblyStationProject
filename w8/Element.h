@@ -1,6 +1,14 @@
 // Workshop 8 - Smart Pointers
 // 2019/11 - Cornel
 
+/********************************************
+	Name   :Heeyeon Han
+	ID     : 154222194
+	Email  : hhan34@myseneca.ca
+	Section: OOP345ZAA
+	Date: 2021/11/21
+*********************************************/
+//I confirm that the content of this file is created by me, with the exception of the parts provided to me by my professor.
 #ifndef SDDS_ELEMENT_H
 #define SDDS_ELEMENT_H
 
@@ -82,6 +90,14 @@ namespace sdds {
 		}
 
 		// TODO: add a function here to validate the price
+		inline void validate() const {
+
+			std::string message = "*** Negative prices are invalid ***";
+			
+			if (m_price <= -1)
+				throw message;
+		}
+
 
 		void display(std::ostream& os) const {
 			os << std::setw(FWD) << m_desc
