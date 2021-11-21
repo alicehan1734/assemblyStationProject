@@ -63,16 +63,16 @@ namespace sdds {
 		//size_t k;
 		//size_t y;
 
-		for (size_t i = 0; i <= desc.size()-1; i++)
+		for (size_t k = 0; k <= desc.size()-1; k++)
 		{
 
-			for (size_t j = 0; j <= price.size()-1; j++)
+			for (size_t y = 0; y <= price.size()-1; y++)
 			{
 
-				if (desc[i].code == price[j].code)
+				if (desc[k].code == price[y].code)
 				{
 
-					std::unique_ptr<Product> product{ new Product(desc[i].desc, price[j].price) };
+					std::unique_ptr<Product> product{ new Product(desc[k].desc, price[y].price) };
 
 					product->validate();
 

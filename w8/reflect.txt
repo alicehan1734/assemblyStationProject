@@ -1,0 +1,26 @@
+
+/********************************************
+	Name   :Heeyeon Han
+	ID     : 154222194
+	Email  : hhan34@myseneca.ca
+	Section: OOP345ZAA
+	Date: 2021/11/21
+*********************************************/
+//I confirm that the content of this file is created by me, with the exception of the parts provided to me by my professor.
+
+1. the advantage that smart pointer syntax provides. Use example from your code to support your explanation.
+=> I use smart pointer in List.h with operator+=
+		void operator+=(std::unique_ptr<T>& priceList) {
+			list.push_back(*priceList);
+		}
+		void operator+=(const T* priceList) {
+			list.push_back(*priceList);
+		}
+The advantage of smart pointers is that objects are easily deleted. 
+When using raw pointers, deletion is required at all possible end points, 
+but memory leaks occur due to exceptions. 
+The best thing about smart pointers is that if an exception occurs, the memory is emptied, making it easier for developers to manage in terms of memory.
+
+the difference between raw and smart pointer syntax in your solution.
+2. If i know that an entity should have a specific kind of ownership of an object, i always use a smart pointer. 
+Other than that, I think it would be irrelevant to using raw pointer in general.
