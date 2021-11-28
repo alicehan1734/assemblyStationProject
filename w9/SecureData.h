@@ -1,4 +1,4 @@
-*******************************************
+/********************************************
 Name   :Heeyeon Han
 ID : 154222194
 Email : hhan34@myseneca.ca
@@ -15,9 +15,11 @@ Date : 2021 / 11 / 26
 namespace w9
 {
 	class Cryptor {
+
 	public:
 		char operator()(char in, char key) const { return in ^ key; }
 	};
+
 	void converter(char*, char, int, const Cryptor&);
 
 	class SecureData {
@@ -35,6 +37,7 @@ namespace w9
 		void backup(const char*);
 		void restore(const char*, char);
 	};
+
 	std::ostream& operator<<(std::ostream&, const SecureData&);
 }
 #endif

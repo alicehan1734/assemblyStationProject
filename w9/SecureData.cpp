@@ -66,17 +66,13 @@ namespace w9 {
 
 	void SecureData::code(char key)
 	{
-		int single = nbytes / 4;
 
-		std::thread thread1(std::bind(converter, text + 1, key, single, Cryptor()));
-		std::thread thread2(std::bind(converter, text + 3, key, single, Cryptor()));
-		std::thread thread3(std::bind(converter, text + 4, key, single, Cryptor()));
-		std::thread thread4(std::bind(converter, text + single, key, single, Cryptor()));
+		thread t1(std::bind(converter, text, key, nbytes / 2, Cryptor()));
+		t1.join();
 
-		thread1.join();
-		thread2.join();
-		thread3.join();
-		thread4.join();
+		thread t2(std::bind(converter, text + nbytes / 2, key, nbytes - (nbytes / 2), Cryptor()));
+		t2.join();
+
 		encoded = !encoded;
 	}
 
@@ -87,27 +83,53 @@ namespace w9 {
 			throw std::string("\n***Data is not encoded***\n");
 		else
 		{
-			ofstream thisFile;
-			thisFile.open(file, ios::out | ios::binary);
+			std::ofstream f(file, std::ios::binary | std::ios::trunc);
 
-			thisFile.write(text, nbytes);
-			thisFile.close();
+			if (f) {
+
+			}
+			else {
+				throw std::string("\n***File could not be opened***\n");
+
+			}
+			
+			f.write(text, nbytes);
+			f.close();
 		}
 	}
 
 	void SecureData::restore(const char* file, char key) {
-		ifstream thisFile;
-		thisFile.open(file, ios::in | ios::binary);
+		std::ifstream f(file, std::ios::in | std::ios::binary);
+
+		if (f) {
+
+		}
+		else {
+			throw("");
+		}
+
+		f.seekg(0, std::ios::end);
+		nbytes = (int)f.tellg();
+
+		if (text) {
+			delete[] text;
+		}
+		else {
+
+		}
 
 		text = new char[nbytes + 1];
 
-		thisFile.read(text, nbytes);
-		thisFile.close();
+		f.seekg(0, std::ios::beg);
+		f.read(text, nbytes);
+		f.close();
 
 		*ofs << "\n" << nbytes << " bytes copied from binary file "
 			<< file << " into memory.\n";
 
 		encoded = true;
+
+		// decode using key
 
 		code(key);
 
