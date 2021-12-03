@@ -14,7 +14,13 @@
 using namespace std;
 
 namespace sdds {
-	
+
+	void LineManager::display(std::ostream& os) const {
+		for (size_t i = 0; i < activeLine.size(); i++)
+		{
+			activeLine.at(i)->display(os);
+		}
+	}
 	void LineManager::linkStations() {
 		const Workstation* work = m_firstStation;
 		size_t i = 0;
@@ -27,59 +33,71 @@ namespace sdds {
 	}
 
 	LineManager::LineManager(const std::string& file, const std::vector<Workstation*>& stations) {
-
-		ifstream doc(file);
 		Utilities utilities;
 
-		if (!doc)
-		{
-			throw string("Sorry, I cannot open the file");
-		}
-		else {
-			string eachLine = "";
-			string currWord = "";
-			string nextWord = "";
-			Workstation* currStation = nullptr;
-			Workstation* pastStation = nullptr;
-			Workstation* nextStation = nullptr;
-			size_t pos = 0;
-			bool flag;
+		ifstream doc(file);
 
-			while (getline(doc, eachLine))
+		if (!doc)
+			throw string("Sorry, I cannot open the file");
+
+		else {
+			bool checking;
+
+			Workstation* nowStation = nullptr;
+			Workstation* before = nullptr;
+			Workstation* next = nullptr;
+
+			string checkingLine = "";
+			string word = "";
+			string curentWord = "";
+
+			size_t pos = 0;
+
+
+			while (getline(doc, checkingLine))
 			{
-				currWord = utilities.extractToken(eachLine, pos, flag);
-				currStation = *find_if(stations.begin(), stations.end(), [&](Workstation* stations) {
-					return stations->getItemName() == currWord; });
-				activeLine.push_back(currStation);
-				if (flag)
+				curentWord = utilities.extractToken(checkingLine, pos, checking);
+				nowStation = *find_if(stations.begin(), stations.end(), [&](Workstation* stations) {
+					return stations->getItemName() == curentWord; });
+				activeLine.push_back(nowStation);
+				
+				if (checking)
 				{
-					nextWord = utilities.extractToken(eachLine, pos, flag);
-					nextStation = *find_if(stations.begin(), stations.end(), [&](Workstation* stations) {
-						return stations->getItemName() == nextWord;
-						});
-					currStation->setNextStation(nextStation);
+					word = utilities.extractToken(checkingLine, pos, checking);
+
+					next = *find_if(stations.begin(), stations.end(), [&](Workstation* stations) {
+					
+						return stations->getItemName() == word;});
+
+
+					nowStation->setNextStation(next);
+				}
+				else {
+
 				}
 			}
 			for_each(stations.begin(), stations.end(), [&](Workstation* temp) {
-				pastStation = *find_if(stations.begin(), stations.end(), [&](Workstation* station) { return station->getNextStation() == pastStation; });
+				before = *find_if(stations.begin(), stations.end(), [&](Workstation* station) { return station->getNextStation() == before; });
 				});
-			m_firstStation = pastStation;
+			m_firstStation = before;
 		}
 		doc.close();
 		m_cntCustomerOrder = pending.size();
 	}
 
-
 	bool LineManager::run(std::ostream& os) {
-		static size_t count = 1;
-		bool flag = false;
+		static size_t cccc = 1;
+		bool checking = false;
 
-		os << "Line Manager Iteration: " << count++ << endl;
+		os << "Line Manager Iteration: " << cccc++ << endl;
 
 		if (!pending.empty())
 		{
 			*m_firstStation += move(pending.front());
 			pending.pop_front();
+		}
+		else {
+
 		}
 
 		for (size_t i = 0; i < activeLine.size(); i++)
@@ -94,16 +112,14 @@ namespace sdds {
 
 		if (completed.size() + incomplete.size() == m_cntCustomerOrder)
 		{
-			flag = true;
+			checking = true;
+		}
+		else {
+
 		}
 		
-		return flag;
+		return checking;
 	}
 
-	void LineManager::display(std::ostream& os) const {
-		for (size_t i = 0; i < activeLine.size(); i++)
-		{
-			activeLine.at(i)->display(os);
-		}
-	}
+
 }

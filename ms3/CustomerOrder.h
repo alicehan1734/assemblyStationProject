@@ -21,31 +21,44 @@
 namespace sdds {
 	struct Item
 	{
+		Item(const std::string& src) : m_itemName(src) {};
+
 		std::string m_itemName;
 		size_t m_serialNumber{ 0 };
 		bool m_isFilled{ false };
 
-		Item(const std::string& src) : m_itemName(src) {};
 	};
 
 	class CustomerOrder {
 		std::string m_name{};
-		std::string m_product{};
 		size_t m_cntItem{ 0 };
+
+		std::string m_product{};
 		Item** m_lstItem{};
+
+
 		static size_t m_widthField;
+
+
 	public:
-		CustomerOrder() {};
-		CustomerOrder(const std::string str);
-		CustomerOrder& operator=(const CustomerOrder& obj) = delete;
-		CustomerOrder(const CustomerOrder& obj);
+
 		CustomerOrder(CustomerOrder&& obj)noexcept;
+		CustomerOrder() {};
+		
+		CustomerOrder& operator=(const CustomerOrder& obj) = delete;
+
+		CustomerOrder(const CustomerOrder& obj);
 		CustomerOrder& operator=(CustomerOrder&& obj)noexcept;
-		~CustomerOrder();
-		bool isFilled() const;
-		bool isItemFilled(const std::string& itemName) const;
+		
 		void fillItem(Station& station, std::ostream& os);
+		~CustomerOrder();
+		
+		bool isFilled() const;
+		CustomerOrder(const std::string str);
+
 		void display(std::ostream& os) const;
+		bool isItemFilled(const std::string& itemName) const;
+
 	};
 }
 #endif

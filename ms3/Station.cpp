@@ -37,17 +37,17 @@ namespace sdds {
 		return serial_num++;
 	}
 
-	size_t Station::getQuantity() const {
-		return curr_items;
-	}
-
 	const string& Station::getItemName() const {
 		return item_handled;
 	}
 
+	size_t Station::getQuantity() const {
+		return curr_items;
+	}
 
-	void Station::display(ostream& os, bool full) const {
-		if (full)
+
+	void Station::display(ostream& os, bool truee) const {
+		if (truee)
 		{
 			os << "[" << setfill('0') << setw(3) << right << id << "] ";
 			os << "Item: " << setw(m_widthField) << setfill(' ') << left << item_handled;
@@ -56,7 +56,7 @@ namespace sdds {
 			os << " Description: " << desc << endl;
 
 		}
-		else
+		else 
 		{
 			os << "[" << setfill('0') << setw(3) << right << id << "] ";
 			os << "Item: " << setw(m_widthField) << setfill(' ') << left << item_handled;
@@ -66,9 +66,8 @@ namespace sdds {
 	void Station::updateQuantity() {
 		curr_items--;
 		if (curr_items < 0)
-		{
 			curr_items = 0;
-		}
+
 	}
 
 }

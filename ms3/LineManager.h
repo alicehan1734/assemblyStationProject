@@ -11,25 +11,27 @@
 
 #ifndef LINEMANAGER_H
 #define LINEMANAGER_H
-
-#include <vector>
-#include <algorithm>
 #include <functional>
 #include <fstream>
+#include <vector>
+#include <algorithm>
+
 
 #include "Workstation.h"
 
 namespace sdds {
 	class LineManager {
-		std::vector<Workstation*> activeLine;
 		size_t m_cntCustomerOrder;
+
+		std::vector<Workstation*> activeLine;
 		Workstation* m_firstStation = nullptr;
 	public:
-		LineManager(const std::string& file, const std::vector<Workstation*>& stations);
 		void displayStations();
 		void displayStationsSorted() const;
-		void linkStations();
+		LineManager(const std::string& file, const std::vector<Workstation*>& stations);
 		void display(std::ostream& os) const;
+
+		void linkStations();
 		bool run(std::ostream& os);
 	};
 }

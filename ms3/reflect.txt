@@ -1,0 +1,16 @@
+/********************************************
+	Name   :Heeyeon Han
+	ID     : 154222194
+	Email  : hhan34@myseneca.ca
+	Section: OOP345ZAA
+	Date: 2021/12/02
+*********************************************/
+//I confirm that the content of this file is created by me, with the exception of the parts provided to me by my professor.
+
+I am honored to take an OOP345 class from the professor. 
+I learned a lot while doing workshops and milestones.
+
+First of all, I put a lot of difficulties in memory leak while doing many assignments.
+Managing memory was the most difficult, and it really took a lot of time. 
+Also, I knew that making Templates was my most vulnerable point, and even after this OOP345,
+I think I'll have to study more deeply about it.

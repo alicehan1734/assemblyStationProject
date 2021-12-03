@@ -17,9 +17,9 @@
 #include "CustomerOrder.h"
 
 namespace sdds {
-	
-	inline std::deque<CustomerOrder>completed;
 	inline std::deque<CustomerOrder>incomplete;
+
+	inline std::deque<CustomerOrder>completed;
 	inline std::deque<CustomerOrder>pending;
 
 

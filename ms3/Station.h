@@ -18,11 +18,11 @@ namespace sdds {
 	class Station {
 		int id = 0;
 		size_t serial_num = 0;
-		size_t curr_items = 0;
+		static size_t m_widthField;
+
 		std::string item_handled = {};
 		std::string desc = {};
-
-		static size_t m_widthField;
+		size_t curr_items = 0;
 		static int id_generator;
 	public:
 		Station() {};

@@ -20,34 +20,31 @@ namespace sdds {
 	void Utilities::setFieldWidth(size_t newWidth) {
 		m_widthField = newWidth;
 	}
-
+	void Utilities::setDelimiter(char newDelimiter) {
+		m_delimiter = newDelimiter;
+	}
 	size_t Utilities::getFieldWidth() const {
 		return m_widthField;
 	}
 
-	void Utilities::setDelimiter(char newDelimiter) {
-		m_delimiter = newDelimiter;
-	}
 
-	char Utilities::getDelimiter() {
-		return m_delimiter;
-	}
-	std::string Utilities::extractToken(const std::string& str, size_t& next_pos, bool& more) {
 
-		string ex_token;
-		size_t pos = str.find(m_delimiter, next_pos);
+	std::string Utilities::extractToken(const std::string& str, size_t& nextLevel, bool& more) {
 
-		if (pos == next_pos)
+		string string;
+		size_t pos = str.find(m_delimiter, nextLevel);
+
+		if (pos == nextLevel)
 		{
-			ex_token = {};
+			string = {};
 			more = false;
-			next_pos += pos + 1;
-			throw "There is not any token between delimiters" + next_pos;
+			nextLevel += pos + 1;
+			throw "There is not any token between delimiters" + nextLevel;
 		}
 		else {
-			ex_token = str.substr(next_pos, pos - next_pos);
-			next_pos = pos + 1;
-			m_widthField = max(m_widthField, ex_token.size());
+			string = str.substr(nextLevel, pos - nextLevel);
+			nextLevel = pos + 1;
+			m_widthField = max(m_widthField, string.size());
 			if (pos != string::npos)
 			{
 				more = true;
@@ -56,8 +53,11 @@ namespace sdds {
 				more = false;
 			}
 		}
-		return ex_token;
+		return string;
 	}
 
+	char Utilities::getDelimiter() {
+		return m_delimiter;
+	}
 
 }

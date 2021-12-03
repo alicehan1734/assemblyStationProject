@@ -21,7 +21,7 @@ namespace sdds {
 		return *this;
 	}
 	bool Workstation::attemptToMoveOrder() {
-		bool flag = false;
+		bool checking = false;
 
 		if (!m_orders.empty())
 		{
@@ -33,44 +33,45 @@ namespace sdds {
 					{
 						completed.push_back(move(m_orders.front()));
 						m_orders.pop_front();
-						flag = true;
+						checking = true;
 					}
 					else if (!m_orders.front().isFilled()) {
 						incomplete.push_back(move(m_orders.front()));
 						m_orders.pop_front();
-						flag = true;
+						checking = true;
 					}
 				}
 				else
 				{
 					*m_pNextStation += move(m_orders.front());
 					m_orders.pop_front();
-					flag = true;
+					checking = true;
 				}
 			}
 		}
-		return flag;
+		return checking;
 	}
 
 	void Workstation::fill(std::ostream& os) {
 		if (!m_orders.empty())
-		{
 			m_orders.front().fillItem(*this, os);
-		}
+
 	}
 	void Workstation::display(std::ostream& os) const {
 		if (m_pNextStation == nullptr)
-		{
 			os << getItemName() << " --> End of Line" << endl;
-		}
-		else {
+		else 
 			os << getItemName() << " --> " << getNextStation()->getItemName() << endl;
-		}
+
 	}
 
 	const Workstation* Workstation::getNextStation() const {
 		return m_pNextStation;
 	}
+
+
+
+
 	void Workstation::setNextStation(Workstation* station) {
 		m_pNextStation = station;
 	}
