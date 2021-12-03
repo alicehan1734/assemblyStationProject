@@ -4,67 +4,60 @@
 	ID     : 154222194
 	Email  : hhan34@myseneca.ca
 	Section: OOP345ZAA
-	Date: 2021/11/15
+	Date: 2021/12/02
 *********************************************/
 //I confirm that the content of this file is created by me, with the exception of the parts provided to me by my professor.
 
-#include <string>
-#include <algorithm>
+#define _CRT_SECURE_NO_WARNINGS
 
 #include "Utilities.h"
 
 using namespace std;
 namespace sdds {
 
-	char Utilities::utils_delimiter = ' ';
+	char Utilities::m_delimiter;
 
-
-	void Utilities::setDelimiter(char newDel) {
-		utils_delimiter = newDel;
-	}
-
-	char Utilities::getDelimiter() {
-		return utils_delimiter;
-	}
-
-	void Utilities::setFieldWidth(size_t fieldWidth) {
-		utils_width = fieldWidth;
+	void Utilities::setFieldWidth(size_t newWidth) {
+		m_widthField = newWidth;
 	}
 
 	size_t Utilities::getFieldWidth() const {
-		return utils_width;
+		return m_widthField;
 	}
 
-	std::string Utilities::extractToken(const std::string& stringText, size_t& position, bool& check) {
+	void Utilities::setDelimiter(char newDelimiter) {
+		m_delimiter = newDelimiter;
+	}
 
-		size_t size_position = stringText.substr(position).find(utils_delimiter);
-		string token = stringText.substr(position);
+	char Utilities::getDelimiter() {
+		return m_delimiter;
+	}
+	std::string Utilities::extractToken(const std::string& str, size_t& next_pos, bool& more) {
 
-		if (size_position == string::npos)
+		string ex_token;
+		size_t pos = str.find(m_delimiter, next_pos);
+
+		if (pos == next_pos)
 		{
-			check = false;
-
-			if (token.length() > utils_width)
-				setFieldWidth(token.length());
+			ex_token = {};
+			more = false;
+			next_pos += pos + 1;
+			throw "There is not any token between delimiters" + next_pos;
 		}
 		else {
-			token = token.substr(0, size_position);
-
-			position += size_position + 1;
-			
-			if (token == "")
+			ex_token = str.substr(next_pos, pos - next_pos);
+			next_pos = pos + 1;
+			m_widthField = max(m_widthField, ex_token.size());
+			if (pos != string::npos)
 			{
-				check = false;
-				throw "There is not any token between delimiters";
+				more = true;
 			}
-			check = true;
-
-			if (token.length() > utils_width)
-				setFieldWidth(token.length());
-		
+			else {
+				more = false;
+			}
 		}
-
-		return token;
+		return ex_token;
 	}
+
 
 }

@@ -4,9 +4,10 @@
 	ID     : 154222194
 	Email  : hhan34@myseneca.ca
 	Section: OOP345ZAA
-	Date: 2021/11/15
+	Date: 2021/12/02
 *********************************************/
 //I confirm that the content of this file is created by me, with the exception of the parts provided to me by my professor.
+
 
 #include <iostream>
 #include <iomanip>
@@ -17,81 +18,57 @@
 using namespace std;
 namespace sdds {
 
-	int Station::id = 0;
-	size_t Station::width = 0;
+	size_t Station::m_widthField = 1;
+	int Station::id_generator = 0;
 
+	Station::Station(const string& str) {
+		Utilities utilities;
+		size_t pos = 0;
+		bool more = false;
 
+		id = ++id_generator;
+		item_handled = utilities.extractToken(str, pos, more);
+		serial_num = stoi(utilities.extractToken(str, pos, more));
+		curr_items = stoi(utilities.extractToken(str, pos, more));
+		m_widthField = max(m_widthField, utilities.getFieldWidth());
+		desc = utilities.extractToken(str, pos, more);
+	}
 	size_t Station::getNextSerialNumber() {
-		return numOfSerial++;
+		return serial_num++;
 	}
 
 	size_t Station::getQuantity() const {
-		return items;
+		return curr_items;
 	}
 
 	const string& Station::getItemName() const {
-		return handledItem;
+		return item_handled;
 	}
 
 
-	void Station::updateQuantity() {
-		
+	void Station::display(ostream& os, bool full) const {
+		if (full)
+		{
+			os << "[" << setfill('0') << setw(3) << right << id << "] ";
+			os << "Item: " << setw(m_widthField) << setfill(' ') << left << item_handled;
+			os << " [" << setfill('0') << setw(6) << right << serial_num << "]";
+			os << " Quantity: " << setw(m_widthField) << setfill(' ') << left << curr_items;
+			os << " Description: " << desc << endl;
 
-		if (items - 1 <= 1) {
-			items = 0;
 		}
-		else {
-			items--;
-		}
-
-	}
-
-	void Station::display(ostream& ostream, bool check) const {
-		if (!check)
-			ostream << "[" << setfill('0') << setw(3) << right << stationId << "] "
-			<< "Item: " << setw(width) << setfill(' ')
-			<< left << handledItem << " [" << setfill('0')
-			<< setw(6) << right << numOfSerial << "]" << endl;
 		else
-			ostream << "[" << setfill('0') << setw(3) << right << stationId << "] "
-			<< "Item: " << setw(width) << setfill(' ') << left
-			<< handledItem << " [" << setfill('0') << setw(6) << right << numOfSerial
-			<< "]" << " Quantity: " << setw(width) << setfill(' ') << left
-			<< items << " Description: " << description << endl;
-	}
-
-
-	Station::Station(const string& stringText) {
-		
-		bool check = false;
-		size_t postion = 0;
-
-		Utilities utilities;
-
-		
-		try
 		{
-			handledItem = utilities.extractToken(stringText, postion, check);
-
-			if (width < utilities.getFieldWidth())
-				width = utilities.getFieldWidth();
-
-			numOfSerial = stoi(utilities.extractToken(stringText, postion, check));
-
-			items = stoi(utilities.extractToken(stringText, postion, check));
-
-			description = utilities.extractToken(stringText, postion, check);
+			os << "[" << setfill('0') << setw(3) << right << id << "] ";
+			os << "Item: " << setw(m_widthField) << setfill(' ') << left << item_handled;
+			os << " [" << setfill('0') << setw(6) << right << serial_num << "]" << endl;
 		}
-		catch (string& error)
-		{
-			cout << error;
-		}
-		
-		id++;
-
-		stationId = id;
 	}
-
-
+	void Station::updateQuantity() {
+		curr_items--;
+		if (curr_items < 0)
+		{
+			curr_items = 0;
+		}
+	}
 
 }
